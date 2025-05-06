@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Komanda{% endblock %}
+{% block content %}
+    <h2>Mūsu komanda sastāv no divām 12. klases skolniecēm.</h2>
+
+    <div style="display: flex; gap: 40px; align-items: center; flex-wrap: wrap;">
+        <div style="text-align: center;">
+            <img src="{{ url_for('static', filename='images/megija.jpg') }}" alt="Megija" width="200" style="border-radius: 10px;">
+            <p><strong>Megija</strong><br>Uzņēmuma vadītāja un mārketinga speciāliste.</p>
+        </div>
+        <div style="text-align: center;">
+            <img src="{{ url_for('static', filename='images/ieva.jpg') }}" alt="Ieva" width="200" style="border-radius: 10px;">
+            <p><strong>Ieva</strong><br>Ražošanas procesa vadītāja un finanšu speciāliste.</p>
+        </div>
+    </div>
+{% endblock %}

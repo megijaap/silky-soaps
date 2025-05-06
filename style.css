@@ -1,0 +1,214 @@
+body {
+    font-family: 'Lora', sans-serif;
+    background-color: #ebe6e2;
+    color: #252525;
+    margin: 0;
+    padding: 0;
+}
+header {
+    background-color: #e2d7cc;
+    color: rgb(8, 8, 8);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 25px; 
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.logo {
+    height: 120px;
+}
+h1 {
+    border-bottom: 2px solid #c1b7af;
+    padding-bottom: 10px;
+    font-size: 22px;
+    
+}
+h2 {
+    font-size: 22px;
+    
+
+}
+p {
+    font-size: 18px;
+   
+
+}
+nav a {
+    color:rgb(0, 0, 0);
+    margin: 0 30px;
+    text-decoration: none;
+}
+nav a:hover {
+    text-decoration: underline;
+}
+main {
+    padding: 20px;
+}
+footer {
+    background-color: #e2d8cf;
+    text-align: center;
+    padding: 10px;
+}
+ul {
+    list-style-type: none;
+}
+ul li a {
+    text-decoration: none;
+    color: #333; 
+    font-weight: bold;
+    display: block; 
+    padding: 8px;
+}
+ul li:hover {
+    background-color: #e0e0e0; 
+}
+/* products-list */
+.products-list {
+    display: flex;
+    gap: 10px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.products-item {
+    max-width: 320px;
+    background-color: #ddd7d0;
+    padding: 10px;
+    border-radius: 5px;
+    color: #333;
+    text-decoration: none;
+    font-size: 20px;
+}
+.products-item:hover {
+    background-color: #dbd4cd;
+}
+.products-item .product-price {
+    text-align: right;
+    font-size: 23px;
+}
+.products-item img {
+    max-width: 300px;
+}
+/* products-list */
+.products-list {
+    display: flex;
+    gap: 10px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.products-item {
+    max-width: 320px;
+    background-color: #e2d7cc;
+    padding: 10px;
+    border-radius: 5px;
+    color: #333;
+    text-decoration: none;
+}
+.products-item:hover {
+    background-color: #DDD;
+}
+.products-item .product-price {
+    text-align: right;
+    font-size: 17px;
+}
+.products-item img {
+    max-width: 100%;
+}
+/* products-show */
+.products-show {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.products-show h2{
+    font-size: 28px;
+}
+.products-show p{
+    font-size: 22px;
+    background-color: #e2d7cc;
+    padding: 10px;
+    
+}
+.products-show img {
+    max-width: 300px; /* vai cita vērtība pēc vajadzības */
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 5px;
+}
+.testimonial {
+    background-color: #f0eae4;
+    padding: 20px;
+    margin-top: 20px;
+    font-style: italic;
+    border-left: 5px solid #c1b7af;
+}
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+        font-size: 16px;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    header, nav, footer {
+        text-align: center;
+        flex-direction: row;
+    }
+
+    .container, .content, .products-show {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .products-show div {
+        width: 100%;
+    
+    }
+
+    button, a {
+        display: inline-block;
+        width: 100%;
+        margin-top: 10px;
+
+    }
+}
+header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    background-color: #e7ddd1; /* vai kāds maigs tonis */
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+@media (max-width: 600px) {
+    header {
+        padding:  17px;
+    }
+
+    nav {
+        flex-direction: row;
+        gap: 10px;
+        font-size: 16px;
+    }
+
+    header img {
+        max-width: 120px;
+        height: auto;
+    }
+}
+    
