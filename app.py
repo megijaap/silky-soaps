@@ -39,11 +39,11 @@ def products_show(product_id):
     """,
         (product_id,),
     ).fetchone()
-
+    atsauksmes = conn.execute("SELECT * FROM atsauksmes WHERE produkts_id = ?", (product_id,)).fetchall()
 # ? ir vieta, kur tiks ievietota vērtība – šajā gadījumā product_id
     conn.close() # Aizver savienojumu ar datubāzi
 # Atgriežam HTML veidni 'products_show.html', padodot konkrēto produktu veidnei
-    return render_template("products_show.html", product=product)
+    return render_template("products_show.html", product=product, atsauksmes=atsauksmes)
 
 @app.route("/")
 def index():
@@ -77,6 +77,7 @@ def pievienot_atsauksmi(product_id):
     # GET metode — rāda formu
     conn.close()
     return render_template("pievienot_atsauksmi.html", product_id=product_id)
+
 @app.route("/atsauksme/<int:id>/edit", methods=["GET", "POST"])
 def rediget_atsauksmi(id):
     conn = get_db_connection()
@@ -96,127 +97,20 @@ def rediget_atsauksmi(id):
 
     conn.close()
     return render_template("rediget_atsauksmi.html", atsauksme=atsauksme)
-# @app.route("/produkti/pievienot", methods=["GET", "POST"])
-# def add_product():
-#     conn = get_db_connection()
-#     if request.method == "POST":
-#         # Iegūstam datus no formas
-#         name = request.form["name"]
-#         price = request.form["price"]
-#         ipasibas_id = request.form["ipasibas_id"]  # Īpašības ID no formas
-        
-#         # Pievienojam produktu datubāzē
-#         conn.execute(
-#             "INSERT INTO Produkts (name, price, ipasibas_id) VALUES (?, ?, ?)",
-#             (name, price, ipasibas_id)
-#         )
-#         conn.commit()
-#         conn.close()
-#         return redirect("/produkti")  # Pāradresē uz produktu sarakstu
-    
-#     # Ja ir GET pieprasījums, iegūstam visas īpašības
-#     ipasibas = conn.execute("SELECT * FROM ipasibas").fetchall()
-#     conn.close()
-    
-#     return render_template("add_product.html", ipasibas=ipasibas)
-# @app.route("/produkti/pievienot", methods=["GET", "POST"])
-# def add_product():
-#     conn = get_db_connection()
-#     if request.method == "POST":
-#         # Iegūstam datus no formas
-#         name = request.form["name"]
-#         price = request.form["price"]
-#         ipasibas_id = request.form["ipasibas_id"]  # Īpašības ID no formas
-        
-#         # Pievienojam produktu datubāzē
-#         conn.execute(
-#             "INSERT INTO Produkts (name, price, ipasibas_id) VALUES (?, ?, ?)",
-#             (name, price, ipasibas_id)
-#         )
-#         conn.commit()
-        
-#         # Tagad dzēšam to uzreiz pēc pievienošanas
-#         conn.execute(
-#             "DELETE FROM Produkts WHERE name = ? AND price = ? AND ipasibas_id = ?",
-#             (name, price, ipasibas_id)
-#         )
-#         conn.commit()
-#         conn.close()
-        
-#         # Pāradresējam lietotāju uz produktu sarakstu
-#         return redirect("/produkti")  # Pāradresē uz citu lapu (produktu sarakstu)
+@app.route("/atsauksme/<int:id>/delete", methods=["POST"])
+def dzest_atsauksmi(id):
+    conn = get_db_connection()
+    atsauksme = conn.execute("SELECT * FROM atsauksmes WHERE id = ?", (id,)).fetchone()
 
-#     # Ja ir GET pieprasījums, iegūstam visas īpašības, lai parādītu formu
-#     ipasibas = conn.execute("SELECT * FROM ipasibas").fetchall()
-#     conn.close()
-# @app.route("/produkti/pievienot", methods=["GET", "POST"])
-# def add_product():
-#     conn = get_db_connection()
-#     if request.method == "POST":
-#         # Iegūstam datus no formas
-#         name = request.form["name"]
-#         price = request.form["price"]
-#         ipasibas_id = request.form["ipasibas_id"]  # Īpašības ID no formas
-        
-#         # Pievienojam produktu datubāzē
-#         conn.execute(
-#             "INSERT INTO Produkts (name, price, ipasibas_id) VALUES (?, ?, ?)",
-#             (name, price, ipasibas_id)
-#         )
-#         conn.commit()
-        
-#         # Tagad iegūstam pēdējā pievienotā produkta ID
-#         last_inserted_id = conn.execute("SELECT last_insert_rowid()").fetchone()[0]
+    if atsauksme is None:
+        conn.close()
+        return "Atsauksme nav atrasta", 404
 
-#         # Pēc pievienošanas uzreiz dzēšam šo produktu
-#         conn.execute(
-#             "DELETE FROM Produkts WHERE id = ?",
-#             (last_inserted_id,)
-#         )
-#         conn.commit()
-#         conn.close()
+    conn.execute("DELETE FROM atsauksmes WHERE id = ?", (id,))
+    conn.commit()
+    conn.close()
+    return redirect(f"/produkti/{atsauksme['produkts_id']}")
 
-#         # Pāradresējam lietotāju uz produktu sarakstu
-#         return redirect("/produkti")  # Pāradresē uz citu lapu (produktu sarakstu)
-
-#     # Ja ir GET pieprasījums, iegūstam visas īpašības, lai parādītu formu
-#     ipasibas = conn.execute("SELECT * FROM ipasibas").fetchall()
-#     conn.close()
-
-#     # Atgriežam veidni
-#     return render_template("add_product.html", ipasibas=ipasibas)
-# @app.route("/produkti/pievienot", methods=["GET", "POST"])
-# def add_product():
-#     conn = get_db_connection()
-#     if request.method == "POST":
-#         # Iegūstam datus no formas
-#         name = request.form["name"]
-#         price = request.form["price"]
-#         ipasibas_id = request.form["ipasibas_id"]  # Īpašības ID no formas
-        
-#         # Pievienojam produktu datubāzē
-#         conn.execute(
-#             "INSERT INTO Produkts (name, price, ipasibas_id) VALUES (?, ?, ?)",
-#             (name, price, ipasibas_id)
-#         )
-#         conn.commit()
-
-#         # Pāradresējam lietotāju uz produktu sarakstu
-#         return redirect("/produkti")  # Pāradresē uz citu lapu (produktu sarakstu)
-
-#     # Ja ir GET pieprasījums, iegūstam visas īpašības, lai parādītu formu
-#     ipasibas = conn.execute("SELECT * FROM ipasibas").fetchall()
-#     conn.close()
-
-#     # Atgriežam veidni
-#     return render_template("add_product.html", ipasibas=ipasibas)
-# @app.route("/produkti/dzest/<int:product_id>")
-# def delete_product(product_id):
-#     conn = get_db_connection()
-#     conn.execute("DELETE FROM Produkts WHERE id = ?", (product_id,))
-#     conn.commit()
-#     conn.close()
-#     return redirect("/produkti")
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
